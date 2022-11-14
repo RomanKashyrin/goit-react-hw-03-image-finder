@@ -15,10 +15,10 @@ export default class App extends Component {
     URL: 'https://pixabay.com/api/',
     API_KEY: '30145762-bbea4d10537f12ddab0b4a39f',
     pictures: [],
-    error: '',
+    error: null,
     page: 1,
     query: '',
-    totalHits: null,
+    totalHits: [],
     status: 'idle',
   }
 
@@ -26,8 +26,6 @@ export default class App extends Component {
     return fetch(
       `${this.state.URL}?q=${this.state.query}&page=${this.state.page}&key=${this.state.API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
     )
-      //  ??
-      //  return fetchImage()
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -54,13 +52,13 @@ export default class App extends Component {
       .catch(error => this.setState({ error, status: 'rejected' }));
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.query !== prevState.query) {
-      this.setState({ status: 'pending' });
-      this.fetchImg();
-    }
+  componentDidUpdate(_, prevState) {
+    // if (this.state.query !== prevState.query) {
+    //   this.setState({ status: 'pending' });
+    //   this.fetchImg();
+    // }
     if (
-      this.state.query === prevState.query &&
+      this.state.query !== prevState.query ||
       this.state.page !== prevState.page
     ) {
       this.setState({ status: 'pending' });

@@ -12,3 +12,5 @@ async function fetchImage(query, page) {
 }
 
 export default fetchImage;
+
+
